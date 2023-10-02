@@ -1,0 +1,3 @@
+npm init -y (initialize node )
+npm install express ( install express dependency )
+node index.js ( to run the backend )
