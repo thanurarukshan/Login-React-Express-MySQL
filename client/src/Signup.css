@@ -1,4 +1,4 @@
-.App {
+.signup-app{
     height: 100vh;
     width: 100vw;
     background-color: #EDEADE;
@@ -9,7 +9,7 @@
 
 }
 
-.app-main {
+.signup-main {
     background-color: #ffffff;
     box-shadow: 0px 0px 40px 4px rgb(185, 185, 185);
     padding: 50px;
@@ -21,14 +21,14 @@
     
 }
 
-.app-main * {
+.signup-main * {
     margin: 5px;
     padding: 5px;
     border-radius: 5px;
     border-width: 0.1px;
 }
 
-.signin-main-title {
+.signup-main-title {
     font-size: 20px;
     font-weight: 400;
 }
