@@ -1,20 +1,47 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import "./Signup.css";
 import { Link } from "react-router-dom";
+import Axios from "axios";
+
 
 function Signup() {
+  const [firstName, setfirstName] = useState("");
+  const [lastName, setlastName] = useState("");
+  const [email, setemail] = useState("");
+  const [password, setpassword] = useState("");
+
+
+  const submit = () => {
+    Axios.post("http://localhost:5000/api/insert", {
+      firstName: firstName,
+      lastName: lastName,
+      email: email,
+      password: password
+    },
+    alert("Successfully signed up, try to login using email and password!")
+    ); // pushing data into backend with relavent variables
+  };
+
   return (
     <div className="signup-app">
       <div className="signup-main">
         <span className="signup-main-title">Sign Up</span>
-        <input type="text" placeholder="First Name" />
-        <input type="text" placeholder="Last Name" />
-        <input type="text" placeholder="Email" />
-        <input type="text" placeholder="Password" />
+        <input type="text" placeholder="First Name" onChange={(e)=>{
+          setfirstName(e.target.value);
+        }}/>
+        <input type="text" placeholder="Last Name" onChange={(e)=>{
+          setlastName(e.target.value);
+        }}/>
+        <input type="text" placeholder="Email" onChange={(e)=>{
+          setemail(e.target.value);
+        }}/>
+        <input type="text" placeholder="Password" onChange={(e)=>{
+          setpassword(e.target.value);
+        }}/>
         <Link to="/">
           <button>Already have account ?</button>
         </Link>
-        <button className="login">Login</button>
+        <button className="login" onClick={submit}>Sign Up</button>
       </div>
     </div>
   );

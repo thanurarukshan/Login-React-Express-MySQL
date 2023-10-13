@@ -10,7 +10,7 @@ function App() {
         <input type="text" placeholder='email'/>
         <input type="text" placeholder='Password'/>
         <Link to="/signup"><button className='createaccount'>Create Account</button></Link>
-        <button className='login'>Login</button>
+        <button className='login'>Sign In</button>
       </div>
     </div>
   );
