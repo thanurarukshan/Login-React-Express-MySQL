@@ -25,6 +25,7 @@ app.get("/test", (req, res) => {
   });
 });
 
+
 app.post("/api/insert", (req, res) => {
   //const studentId = req.body.studentId;
   //const studentName = req.body.studentName;
@@ -46,6 +47,37 @@ app.post("/api/insert", (req, res) => {
     }
   );
 });
+
+app.post("/api/signup", (req, res) => {
+  //const studentId = req.body.studentId;
+  //const studentName = req.body.studentName;
+  //const studentDep = req.body.studentDep;
+  
+  const email = req.body.email;
+  const password = req.body.password;
+
+  const sqlStatement =
+  "SELECT * FROM logininfo WHERE email = ? AND password = ?;";
+  db.query(
+    sqlStatement,
+    [email, password],
+    (error, result) => {
+      if (error) {
+        res.send(error);
+      }
+      else {
+        if (result.length >0) {
+          res.send(result);
+        }
+        else {
+          res.send({message:"Wrong Combination"})
+        }
+      }
+    }
+  );
+});
+
+
 
 app.listen(port, () => {
   console.log(`Example app listening on port ${port}`);

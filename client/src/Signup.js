@@ -4,12 +4,12 @@ import { Link } from "react-router-dom";
 import Axios from "axios";
 
 
+
 function Signup() {
   const [firstName, setfirstName] = useState("");
   const [lastName, setlastName] = useState("");
   const [email, setemail] = useState("");
   const [password, setpassword] = useState("");
-
 
   const submit = () => {
     Axios.post("http://localhost:5000/api/insert", {
@@ -17,10 +17,11 @@ function Signup() {
       lastName: lastName,
       email: email,
       password: password
-    },
-    alert("Successfully signed up, try to login using email and password!")
-    ); // pushing data into backend with relavent variables
+    }).then((response) => {
+      alert("Successfully signed up, try to log in using email and password!");
+    }); // pushing data into the backend with relevant variables
   };
+  
 
   return (
     <div className="signup-app">
