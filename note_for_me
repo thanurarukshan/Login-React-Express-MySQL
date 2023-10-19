@@ -1,3 +1,7 @@
 npm init -y (initialize node )
 npm install express ( install express dependency )
 node index.js ( to run the backend )
+
+bcrypt ( dependency for password hashing )
+important : password hashes may contain more than 100 characters. make sure to use char(500) or something similar
+

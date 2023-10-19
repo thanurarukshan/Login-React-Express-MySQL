@@ -4,6 +4,9 @@ const port = 5000;
 const cors = require("cors");
 const mysql = require("mysql");
 
+const bcrypt = require("bcrypt"); // used for pasword hashing
+const saltRounds = 10; // used for pasword hashing
+
 app.use(cors());
 app.use(express.json());
 
@@ -26,18 +29,42 @@ app.get("/test", (req, res) => {
 });
 
 
+
 app.post("/api/insert", (req, res) => {
-  //const studentId = req.body.studentId;
-  //const studentName = req.body.studentName;
-  //const studentDep = req.body.studentDep;
+
+  const firstName = req.body.firstName;
+  const lastName = req.body.lastName;
+  const email = req.body.email;
+  const password = req.body.password;
+
+  // hashing the password
+  bcrypt.hash(password, saltRounds, (err, hash) => {
+    const sqlStatement =
+    "INSERT INTO logininfo (firstName, lastName, email, password) VALUES (?,?,?,?);";
+    db.query(
+      sqlStatement,
+      [firstName, lastName, email, hash], // instead of passing password directly to the databash we pass the password hash into the database
+      (error, result) => {
+        console.log(result);
+        res.send(result);
+      }
+    );
+  })
   
+});
+
+
+/* without using password hashing
+
+app.post("/api/insert", (req, res) => {
+
   const firstName = req.body.firstName;
   const lastName = req.body.lastName;
   const email = req.body.email;
   const password = req.body.password;
 
   const sqlStatement =
-  "INSERT INTO logininfo (firstName, lastName, email, password) VALUES (?,?,?,?);";
+    "INSERT INTO logininfo (firstName, lastName, email, password) VALUES (?,?,?,?);";
   db.query(
     sqlStatement,
     [firstName, lastName, email, password],
@@ -47,6 +74,8 @@ app.post("/api/insert", (req, res) => {
     }
   );
 });
+
+
 
 app.post("/api/signup", (req, res) => {
   //const studentId = req.body.studentId;
@@ -77,6 +106,44 @@ app.post("/api/signup", (req, res) => {
   );
 });
 
+*/
+
+app.post("/api/signup", (req, res) => {
+  //const studentId = req.body.studentId;
+  //const studentName = req.body.studentName;
+  //const studentDep = req.body.studentDep;
+  
+  const email = req.body.email;
+  const password = req.body.password;
+
+  const sqlStatement =
+  "SELECT * FROM logininfo WHERE email = ?";
+  db.query(
+    sqlStatement,
+    email,
+    (error, result) => {
+      if (error) {
+        res.send(error);
+      }
+      else {
+        if (result.length >0) {
+          // compare the password with selected results
+          bcrypt.compare(password, result[0].password, (error, response) => {
+            if (response) {
+              res.send(result);
+            }
+            else {
+              res.send({message: 'Wrong Password'});
+            }
+          })
+        }
+        else {
+          res.send({message:"Wrong Combination"})
+        }
+      }
+    }
+  );
+});
 
 
 app.listen(port, () => {

@@ -32,7 +32,7 @@ function App() {
         <input type="text" placeholder='email' onChange={(e)=> {
           setEmail(e.target.value);
         } }/>
-        <input type="text" placeholder='Password' onChange={(e)=> {
+        <input type="password" placeholder='Password' onChange={(e)=> {
           setpassword(e.target.value);
         }}/>
         <Link to="/signup"><button className='createaccount'>Create Account</button></Link>

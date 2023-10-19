@@ -36,7 +36,7 @@ function Signup() {
         <input type="text" placeholder="Email" onChange={(e)=>{
           setemail(e.target.value);
         }}/>
-        <input type="text" placeholder="Password" onChange={(e)=>{
+        <input type="password" placeholder="Password" onChange={(e)=>{
           setpassword(e.target.value);
         }}/>
         <Link to="/">
