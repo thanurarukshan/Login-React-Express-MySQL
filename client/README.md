@@ -1,3 +1,37 @@
+README.md
+
+About
+
+This project is a login system built using React, Node.js (Express), and MySQL. It includes a password hashing feature for security and a stay logged in feature to improve user experience.
+
+Features
+
+Password hashing: All passwords are hashed using a secure algorithm before being stored in the database. This helps to protect user data in the event of a security breach.
+Stay logged in: Users can choose to stay logged in even after they reload the page. This is done by storing a JWT token in the user's browser.
+Installation
+
+To install and run this project, you will need:
+
+Node.js
+Express
+MySQL
+React
+Once you have installed all of the necessary dependencies, you can clone the repository and install the dependencies:
+
+git clone https://github.com/your-username/login-system.git
+cd login-system
+npm install
+Usage
+
+To start the server, run the following command:
+
+node server.js
+Then, you can open a web browser and navigate to http://localhost:3000 to see the login page.
+
+Contributing
+
+If you would like to contribute to this project, please feel free to fork the repository and submit a pull request.
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).

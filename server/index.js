@@ -133,7 +133,7 @@ app.post("/api/signup", (req, res) => {
               res.send(result);
             }
             else {
-              res.send({message: 'Wrong Password'});
+              res.send({message: 'Wrong Password for the selected user'});
             }
           })
         }
