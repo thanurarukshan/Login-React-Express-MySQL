@@ -7,7 +7,7 @@ function App() {
   const [email, setEmail] = useState("")
   const [password, setpassword] = useState("")
   const [message, setMessage] = useState("")
-  
+
   const login = () => {
     Axios.post("http://localhost:5000/api/signup", {
       email: email,
@@ -23,7 +23,16 @@ function App() {
         setMessage(response.data[0].firstName)
       }
     })};
-
+    
+    Axios.defaults.withCredentials = true ;  // this needs when using sessions and cookies idk why ?
+    useEffect(() => {
+      Axios.get("http://localhost:5000/api/signup").then((response)=> {
+        if (response.data.loggedIn == true) {
+          console.log(response);
+          setMessage(response.data.user[0].firstName);
+        }
+      })
+    }, [])
 
   return (
     <div className="App">

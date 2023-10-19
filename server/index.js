@@ -7,8 +7,33 @@ const mysql = require("mysql");
 const bcrypt = require("bcrypt"); // used for pasword hashing
 const saltRounds = 10; // used for pasword hashing
 
-app.use(cors());
+// dependencies required for sessions and cookies
+const bodyParser = require("body-parser");
+const cookieParser = require("cookie-parser");
+const session = require("express-session");
+
+
+// when we don't use sessions of cookies, we can use cors policy like in the next line
+//app.use(cors());
+app.use(cors({
+  origin: ["http://localhost:3000"],
+  methods: ["GET", "POST", "PUT"],
+  credentials: true
+}));
+
 app.use(express.json());
+app.use(bodyParser.urlencoded({extended: true}));
+app.use(cookieParser());
+app.use(session({
+  key: "userId",
+  secret: "someReallyLongSecretTextDidNotMatterWhatItIs",
+  resave: false,
+  saveUninitialized: false,
+  cookie: {
+    expires: 60 * 60 * 24
+  }
+}))
+
 
 const db = mysql.createPool({
   host: "localhost",
@@ -53,6 +78,16 @@ app.post("/api/insert", (req, res) => {
   
 });
 
+
+// session related thing (keep the user loggedin even refreshed)
+
+app.get("/api/signup", (req, res) => {
+  if (req.session.user) {
+    res.send({ loggedIn: true, user: req.session.user });
+  } else {
+    res.send({ loggedIn: false });
+  }
+});
 
 /* without using password hashing
 
@@ -109,10 +144,7 @@ app.post("/api/signup", (req, res) => {
 */
 
 app.post("/api/signup", (req, res) => {
-  //const studentId = req.body.studentId;
-  //const studentName = req.body.studentName;
-  //const studentDep = req.body.studentDep;
-  
+
   const email = req.body.email;
   const password = req.body.password;
 
@@ -130,6 +162,8 @@ app.post("/api/signup", (req, res) => {
           // compare the password with selected results
           bcrypt.compare(password, result[0].password, (error, response) => {
             if (response) {
+              req.session.user = result;
+              console.log(req.session.user);
               res.send(result);
             }
             else {
